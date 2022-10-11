@@ -17,7 +17,7 @@ public class RailwayReservation {
 	boolean t=true;
 	while(t)
 	{
-		System.out.println(" 1.Ticket Booking\n 2.Ticket Cancel\n 3.Ticket Availability\n 4.Ticket Booed details\n 5.Print My Ticket\n 6.Logout");
+		System.out.println(" 1.Ticket Booking\n 2.Ticket Cancel\n 3.Ticket Availability\n 4.Ticket Booked details\n 5.Print My Ticket\n 6.Logout");
 		int choice=sc.nextInt();
 		switch(choice)
 		{
@@ -48,12 +48,13 @@ public class RailwayReservation {
 class Booking {
 	Scanner sc1=new Scanner (System.in);
 	static int l=2,u=2,m=2,rac=2,w=0;
-	
-	static String pname[]=new String[12];
-	 static int age[]=new int[12];
-	 static String gender[]=new String[12];
-	static String berth[]=new String[12];
-	static int pnrnum[]=new int[12];
+	static int p=0;
+	static String pname[]=new String[15];
+	 static int age[]=new int[15];
+	 static String gender[]=new String[15];
+	static String berth[]=new String[15];
+	static int pnum=11091;
+	static int pnrnum[]=new int[15];
 	//static String fromto[]=new String[12];
 	 int[] sino=new int[12];
 	static int r=1,k=0;
@@ -61,7 +62,7 @@ class Booking {
 		System.out.println("Enter number of passenger to book the ticket");
 		
 		int n=sc1.nextInt();
-		for(int i=0;i<n;i++,k++) 
+		for(int i=0;i<n;i++,k++,pnum++) 
 		{
 			if(w==2)
 			{
@@ -75,9 +76,11 @@ class Booking {
 				age[k]=sc1.nextInt();
 			System.out.println("Enter a passenger gender");
 				gender[k]=sc1.next();
+				System.out.println("Passenger's PNR number:"+pnum);
+				pnrnum[k]=pnum;
 			 if(l<=0&&u<=0&&m<=0&&rac<=0)
 				{
-					berth[k]="waiting List";
+					berth[k]="Wl";
 					w++;
 				}
 			else if(l<=0&&u<=0&&m<=0)
@@ -97,7 +100,7 @@ class Booking {
 					berthPreference();
 				else
 				{
-					berth[k]="lower";
+					berth[k]="Lower";
 					l--;
 				}
 			}
@@ -118,21 +121,40 @@ class Booking {
 	public void cancelTicket() {
 		System.out.println("Enter the PNR number to cancel your booking");
 		int pnr=sc1.nextInt();
-		int pos;
+		
 		for(int i=0;i<pname.length;i++) {
-			if(pnrnum[i]==pnr) {
-				pos=i;
-				for(int j=i;j<pname.length;j++) {
-					if(berth[j]=="RAC") {
-					pname[pos]=pname[j];
-					age[pos]=age[j];
-					gender[pos]=gender[j];
-					pos[j]= p
+			if(pnrnum[i]==pnr) 
+			{
+				for(int j=i;j<pname.length;) 
+				{
+					if(berth[j]=="RAC")
+					{
+						pname[i]=pname[j];
+						age[i]=age[j];
+						gender[i]=gender[j];
+						pnrnum[i]=pnrnum[j];
+					for(int o=j;o<pname.length;) 
+					  {
+						if(berth[o]=="WL")
+						{
+							pname[j]=pname[o];
+							age[j]=age[o];
+							gender[j]=gender[o];
+							pnrnum[j]=pnrnum[o];
+							pname[o]=null;
+							berth[o]=null;
+							break;
+						}
+				 	  }
 					}
+					break;
 				}
+				break;
 			}
-		}
+				}
+		
 	}
+
 	public void ticketAvailability() {
 		 		System.out.println("Lower Berth: "+l);
 		 		System.out.println("Upper Berth: "+u);
@@ -145,10 +167,10 @@ class Booking {
 		if(pname[0]==null)
 			System.out.println("No Tickets are booked");
 		else {
-			System.out.println("SI No\t Name\t \t Age\t Gender \t Berth Preference \t From To");
+			System.out.println("SI No\t PNR Num \tName\t \t Age\t Gender \t Berth Preference \t From To");
 		for(int i=0;i<pname.length;i++) {
 			if(pname[i]!=null)
-				System.out.println(sino[i]+"\t"+pname[i]+"\t\t"+age[i]+"\t"+gender[i]+"\t"+berth[i]+"Chennai to Goa");	
+				System.out.println(sino[i]+"\t"+pnrnum[i]+"\t"+pname[i]+"\t\t"+age[i]+"\t"+gender[i]+"\t"+berth[i]+"\tChennai to Goa");	
 		}
 		}
 	}
@@ -202,10 +224,11 @@ class Booking {
 	public void print() {
 		System.out.println("Enter the serial number of your Ticket");
 		int si=sc1.nextInt();
+		System.out.println("SI.No\t PNR Num Name\t Age \t Gender\t Berth Status \t From and To");
 		for(int i=0;i<pname.length;i++) {
-			System.out.println("SI.No\t Name\t Age \t Gender\t Berth Status \t From and To");
+			
 			if(sino[i]==si){
-				System.out.println(sino[i]+"\t"+pname[i]+"\t"+age[i]+"\t"+berth[i]+"\t Chennai to Goa");
+				System.out.println(sino[i]+"\t"+pnrnum[i]+"\t"+pname[i]+"\t"+age[i]+"\t"+gender[i]+"\t"+berth[i]+"\t Chennai to Goa");
 			}
 		}
 	}
