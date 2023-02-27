@@ -1,0 +1,27 @@
+import java.util.Scanner;
+class Task2
+{
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the number : ");
+		int n=sc.nextInt();
+		int count=1;
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				if(i>j)
+					System.out.print("0 ");
+				else if(i==j)
+				{
+				System.out.print(count+" ");
+				count++;
+				}
+				else 
+					System.out.print(" ");
+			}
+			System.out.println();
+		}
+	}
+}
